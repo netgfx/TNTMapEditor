@@ -2,7 +2,7 @@
 
 TNT stands for Top and Tile map editor. This is an open source tile-map-editor I created to help me out put out some maps fast.
 
-Feel to use it as you like.
+Feel free to use it as you like.
 
 ## Quick start
 
