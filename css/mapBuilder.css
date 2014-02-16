@@ -1,0 +1,177 @@
+#map{
+    float:left;
+    position:relative;
+    width:1300px;
+    height:780px;
+    left:300px;
+    top:64px;
+}
+
+#mapOverlay {
+    float:left;
+    position:absolute;
+    width:1300px;
+    height:780px;
+    left:300px;
+    top:64px;
+    background-color:rgba(20,60,10,0.4);
+    display:none;
+    z-index: 20;
+}
+
+#tile-preview{
+    float:left;
+    margin-left:20px;
+    width:64px;
+    height:64px;
+    position: absolute;
+    border:2px solid #fff;
+    left: 200px;
+    top: 65px;
+}
+
+#bg{
+    width:100%;
+    height:100%;
+    position:fixed;
+    background-image:url("../assets/dw.jpg");
+    background-repeat:repeat;
+}
+
+.block{
+    width:64px;
+    height:64px;
+    border:1px solid #ffffff;
+    position:absolute;
+    background-color: rgba(255,255,255,0.1);
+}
+
+.blockExtras{
+    width:64px;
+    height:64px;
+    border:1px solid #ffffff;
+    position:absolute;
+    background-color: rgba(255,255,255,0.1);
+}
+
+.imageBlocks{
+    float:left;
+    position:relative;
+    border:1px solid #fff;
+    padding:0px;
+    width:64px;
+    height:64px;
+}
+
+#sidePanel{
+    position:absolute;
+    background-color:rgba(0,0,0,0.7);
+    width:208px;
+    left:0;
+    top:57px;
+    height:100%;
+    overflow-y:auto;
+}
+
+#sidePanel2{
+    position:absolute;
+    background-color:rgba(0,0,0,0.7);
+    width:208px;
+    left:0;
+    top:57px;
+    height:1024px;
+    overflow-y:auto;
+    display:none;
+}
+
+.extras{
+    max-height: 64px;
+}
+
+#topMenu{
+    width:calc(100% - 248px);
+    height:40px;
+    position: absolute;
+    background-color:#fec72c;
+    left:248px;
+}
+
+#topMenu .top-buttons{
+    color:#000;
+    font-size:16px;
+    font-weight: bold;
+    float:left;
+    position: relative;
+    margin-left:10px;
+    cursor:pointer;
+    line-height: 38px;
+    text-decoration: underline;
+}
+
+#results{
+    width: 100%;
+    background-color: #ededed;
+    color:#1e1e1e;
+    min-height: 200px;
+}
+
+#save{
+
+
+}
+
+#import-input{
+    width: 100%;
+    background-color: #ededed;
+    color:#1e1e1e;
+    min-height: 200px;
+}
+
+.enabled {
+    background-color:#f1f1f1 !important;
+    color:#1e1e1e !important;
+}
+
+#import{
+
+}
+
+#clear{
+    width:100px;
+    height:40px;
+    color:#fff;
+    background-color:#1e1e1e;
+    border:2px solid #4bc427;
+    position: fixed;
+    bottom:165px;
+    left:500px;
+    text-align: center;
+    line-height: 39px;
+    cursor:pointer;
+    padding-top:5px;
+}
+
+#sample{
+    width:100px;
+    height:40px;
+    color:#fff;
+    background-color:#1e1e1e;
+    border:2px solid #4bc427;
+    position: fixed;
+    bottom:165px;
+    left:600px;
+    text-align: center;
+    line-height: 39px;
+    cursor:pointer;
+    padding-top:5px;
+}
+
+#selectedTile{
+    width:100%;
+    height:100%;
+}
+
+.tile{
+    width:100%;
+    height:100%;
+}

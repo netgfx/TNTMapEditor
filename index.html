@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/mapBuilder.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <!--[if lt IE 9]>
+            <script src="libs/html5.js"></script>
+            <script>window.html5 || document.write('<script src="libs/html5.js"><\/script>')</script>
+        <![endif]-->
+    </head>
+    <body>
+        <div id="bg"></div>
+        <div id="map"></div>
+        <div id="mapOverlay"></div>
+        <div id="tile-preview"></div>
+        <div id="sidePanel"></div>
+        <div id="sidePanel2"></div>
+
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Tile Builder</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav nav-pills navbar-left">
+                <li class="navbar-btn" id="showTiles"><a href="#">Show Tiles</a></li>
+                <li class="navbar-btn" id="showExtras"><a href="#">Show Extras</a></li>
+                <li class="navbar-btn" id="loadAssets"><a href="#">Load Assets</a></li>
+                <li class="navbar-btn" data-toggle="modal" data-target="#myModal" id="save"><a href="#">Export JSON</a></li>
+                <li class="navbar-btn" data-toggle="modal" data-target="#importModal" id="import"><a href="#">Import JSON</a></li>
+                <li class="navbar-btn" id="loadSample"><a href="#">Load Sample</a></li>
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
+                <form class="navbar-form navbar-left" role="search">
+                    <input type="text" class="form-control" placeholder="Width" id="width">
+                    <input type="text" class="form-control" placeholder="Height" id="height">
+                    <button type="submit" class="btn btn-default rebuildStage">Build</button>
+                </form>
+              </ul>
+          </div> <!-- collapse -->
+
+
+
+         </div>
+        </nav>
+
+        <!-- <div id="topMenu">
+            <div class="top-buttons" id="showTiles">Show Tiles</div>
+            <div class="top-buttons" id="showExtras">Show Extras</div>
+            <div class="top-buttons" id="loadAssets">Load Assets</div>
+        </div> -->
+
+        <!-- <div id="save" class="enabled">SAVE MAP</div>
+        <div id="import">IMPORT</div>
+        <div id="clear">CLEAR</div>
+        <div id="sample">SAMPLE</div>
+        <textarea id="results"></textarea> -->
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- Modal EXPORT -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Export JSON</h4>
+              </div>
+              <div class="modal-body">
+                <textarea id="results"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveExport">Save To Clipboard</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+         <!-- Modal IMPORT -->
+        <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Import JSON</h4>
+              </div>
+              <div class="modal-body">
+                <textarea id="import-input"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="importJSON">Import JSON</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--<div class="footer-container">
+            <footer class="wrapper">
+                <h3>footer</h3>
+            </footer>
+        </div>-->
+
+        <script>window.jQuery || document.write('<script src="js/libs/jquery-1.10.2.min.js"><\/script>')</script>
+        <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="66yj5tahqahrq97"></script>
+        <script type="text/javascript" src="js/libs/ZeroClipboard.min.js"></script>
+        <script type="text/javascript" src="js/libs/jquery-ui.js"></script>
+        <script type="text/javascript" src="js/libs/underscore-min.js"></script>
+        <script type="text/javascript" src="js/libs/imageLoader.js"></script>
+        <script src="js/libs/store2.min.js"></script>
+        <script src="js/registry.js"></script>
+        <script src="js/utils.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script src="js/mapBuilder.js"></script>
+    </body>
+</html>
