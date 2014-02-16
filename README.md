@@ -19,6 +19,8 @@ Feel free to use it as you like.
 -> Auto save
 -> Paint tiles with mouse-move
 
+SAMPLE: <a href="http://www.netgfx.com/trunk/games/tntmap/index.html">TNT Map Builder</a>
+
 ** Feel free to contribute or fork this.
 
 *** License is under WTFPL
