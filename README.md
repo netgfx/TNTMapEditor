@@ -13,7 +13,6 @@ Feel free to use it as you like.
  * Load extra items along with tiles
 
 ### Future features support
- * Alter map size
  * Load custom tiles from Dropbox
  * Save map to local-storage
  * Auto save
