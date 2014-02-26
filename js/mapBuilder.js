@@ -149,6 +149,8 @@ $(document).ready(function () {
         });
     });
 
+    $(".licence").on("click",showLicenceInfo);
+
 });
 
 /**
@@ -158,7 +160,15 @@ $(document).ready(function () {
  */
 
 function rebuildStage(e) {
+    e.preventDefault();
+    var newW = $("#width").val();
+    var newH = $("#height").val();
 
+    var totalBlocksW = Math.ceil(newW / 64);
+    var totalBlocksH = Math.ceil(newH / 64);
+
+    createBlocks(64, totalBlocksW, totalBlocksH);
+    return false;
 }
 
 /**
@@ -231,6 +241,7 @@ function init(assets) {
             appendTo: "body"
         });
 
+
     }
 
     $(".imageBlocks>img").on("click", onSelectTile);
@@ -275,12 +286,18 @@ function onSelectTile(e) {
     $("#tile-preview").append(selectedTile[0]);
 }
 
-function createBlocks(blockSize) {
-    var w = blockSize * 20;
-    var h = blockSize * 12;
+function createBlocks(blockSize, offset1, offset2) {
+    var totalW = offset1 || 20;
+    var totalH = offset2 || 12;
 
-    for (var i = 0; i < 12; i++) {
-        for (var j = 0; j < 20; j++) {
+    var w = blockSize * totalW;
+    var h = blockSize * totalH;
+
+    window.console.log("Building Map: ", totalW, totalH, offset1, offset2, w, h);
+
+    $("#map").empty();
+    for (var i = 0; i < totalH; i++) {
+        for (var j = 0; j < totalW; j++) {
 
             $("#map").append("<div class='block' id='block_" + i + "_" + j + "' style='left:" + (j * (blockSize + 1)) + "px;top:" + (i * (blockSize + 1)) + "px;'></div>");
 
@@ -290,6 +307,14 @@ function createBlocks(blockSize) {
 
     $(".block").on("click", addTile);
     $(".blockExtras").on("click", addTile);
+    // hi-jack right click to clear
+    $(".block").on("contextmenu", function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var item = $(this);
+        item.empty();
+        return false;
+    });
 
     $(".block").droppable({
         accept: function (ui) {
@@ -347,6 +372,7 @@ function loadSample(e) {
 }
 
 function saveProgress(e) {
+    e.preventDefault();
 
     $(e.currentTarget).addClass("enabled");
 
@@ -391,6 +417,7 @@ function saveProgress(e) {
 
     $("#results").val(JSON.stringify(storage));
     //window.console.log(JSON.stringify(storage));
+
 
 }
 
@@ -449,4 +476,10 @@ function importJSON(json) {
 
     $(".block").on("click", addTile);
     $(".blockExtras").on("click", addTile);
+}
+
+function showLicenceInfo(e) {
+    e.preventDefault();
+
+
 }

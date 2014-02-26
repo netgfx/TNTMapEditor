@@ -175,3 +175,19 @@
     width:100%;
     height:100%;
 }
+
+.footer{
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+}
+
+.footer a{
+    cursor:pointer;
+}
+
+.img-licence{
+    width:100%;
+    min-height:135px;
+    resize:none;
+}
