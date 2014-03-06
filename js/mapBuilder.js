@@ -90,6 +90,7 @@ $(document).ready(function () {
     "assets/tiles/bg/mp3.png",
     "assets/tiles/bg/mp4.png",
     "assets/tiles/bg/mp5.png",
+    "assets/tiles/items/clear.png"
   ];
 
     var doodleList = [
@@ -194,6 +195,9 @@ function enableDB(e) {
         // Required. Called when a user selects an item in the Chooser.
         success: function (files) {
             alert("Here's the file link: " + files[0].link);
+
+            FOR
+
             window.console.log(files);
         },
 

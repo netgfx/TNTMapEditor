@@ -199,7 +199,7 @@
 			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 6809,
+				"buffer_size": 8279,
 				"line_ending": "Windows"
 			}
 		},
@@ -207,15 +207,15 @@
 			"file": "css/main.css",
 			"settings":
 			{
-				"buffer_size": 6550,
-				"line_ending": "Unix"
+				"buffer_size": 0,
+				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "css/mapBuilder.css",
 			"settings":
 			{
-				"buffer_size": 2707,
+				"buffer_size": 2878,
 				"line_ending": "Windows"
 			}
 		},
@@ -223,7 +223,7 @@
 			"file": "js/mapBuilder.js",
 			"settings":
 			{
-				"buffer_size": 13222,
+				"buffer_size": 14096,
 				"line_ending": "Windows"
 			}
 		},
@@ -452,6 +452,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"init",
 			"tile",
 			"selectedTile",
 			"init",
@@ -578,8 +579,7 @@
 			"investi",
 			"getUserInfo",
 			"manager",
-			"topics",
-			"onRemoveUser"
+			"topics"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -608,15 +608,15 @@
 					"file": "index.html",
 					"settings":
 					{
-						"buffer_size": 6809,
+						"buffer_size": 8279,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2578,
-								2588
+								0,
+								0
 							]
 						],
 						"settings":
@@ -872,7 +872,7 @@
 					"file": "css/main.css",
 					"settings":
 					{
-						"buffer_size": 6550,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
@@ -1092,15 +1092,15 @@
 					"file": "css/mapBuilder.css",
 					"settings":
 					{
-						"buffer_size": 2707,
+						"buffer_size": 2878,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1287,
-								1287
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1356,15 +1356,15 @@
 					"file": "js/mapBuilder.js",
 					"settings":
 					{
-						"buffer_size": 13222,
+						"buffer_size": 14096,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3904,
-								3904
+								6732,
+								6736
 							]
 						],
 						"settings":
@@ -1610,7 +1610,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1799.0,
+						"translation.y": 3109.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
