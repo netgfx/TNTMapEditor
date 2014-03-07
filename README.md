@@ -11,9 +11,9 @@ Feel free to use it as you like.
  * Export of JSON bases on the names of the tile images e.x (corner.png will become corner in the json)
  * Load of a sample Map for quickstart
  * Load extra items along with tiles
+ * Load custom tiles from Dropbox
 
 ### Future features support
- * Load custom tiles from Dropbox
  * Save map to local-storage
  * Auto save
  * Paint tiles with mouse-move
@@ -27,7 +27,7 @@ Feel free to use it as you like.
 <a href="http://www.wtfpl.net/"><img
        src="http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png"
        width="80" height="15" alt="WTFPL" /></a>
- 
+
 
 ===========
 

@@ -196,7 +196,13 @@ function enableDB(e) {
         success: function (files) {
             alert("Here's the file link: " + files[0].link);
 
-            FOR
+            var arr = [];
+            for(var i=0; i<files.length;i++){
+                var img = files[i].link;
+                arr.push(img);
+            }
+
+            loadAssets(arr, appendAssets);
 
             window.console.log(files);
         },
@@ -263,6 +269,22 @@ function makeDoodles(assets) {
             appendTo: "body"
         });
 
+    }
+
+    $(".imageBlocks>img").on("click", onSelectTile);
+}
+
+function appendAssets(assets) {
+    for (var i = 0; i < assets.length; i++) {
+        var uid = _.uniqueId("tile_");
+        $("#sidePanel").append("<div class='imageBlocks'><img id='" + uid + "' src='" + assets[i] + "'/></div>");
+        $(".imageBlocks>img").draggable({
+            cursor: "move",
+            revert: true,
+            grid: [1, 1],
+            helper: "clone",
+            appendTo: "body"
+        });
     }
 
     $(".imageBlocks>img").on("click", onSelectTile);
