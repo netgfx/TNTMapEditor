@@ -14,9 +14,10 @@ Feel free to use it as you like.
  * Load custom tiles from Dropbox
 
 ### Future features support
- * Save map to local-storage
- * Auto save
  * Paint tiles with mouse-move
+ * Clear existing tiles
+ * Load previously loaded tiles
+ * Print tiles for export
 
 <b>SAMPLE:</b> <a href="http://www.netgfx.com/trunk/games/tntmap/index.html">TNT Map Builder</a>
 
