@@ -133,6 +133,8 @@ $(document).ready(function () {
     $("#showExtras").bind("click", showExtras);
     $("#loadAssets").bind("click", enableDB);
     $(".rebuildStage").bind("click", rebuildStage);
+    $("#toggle-autosave").on("click", toggleAutoSave);
+    $("#loadSave").on("click", loadLastSave);
 
     $(".modal").on("click", "#importJSON", function () {
         importJSON($("#import-input").val());
@@ -181,6 +183,54 @@ function rebuildStage(e) {
 function onSaveToClipboard(e) {
     window.console.log($("#results").val());
     return $("#results").val();
+}
+
+/**
+ * [toggleAutoSave description]
+ * @param  {[type]} e [description]
+ * @return {[type]}   [description]
+ */
+function toggleAutoSave(e) {
+    e.preventDefault();
+    window.console.log(e);
+
+    var item = $(e.currentTarget);
+    if(item.hasClass("toggle-off")){
+        item.removeClass("toggle-off").addClass("toggle-on");
+        item.children("a").text("Auto-Save On");
+        enableAutoSave();
+        window.console.log("init save");
+    }
+    else if(item.hasClass("toggle-on")){
+        item.removeClass("toggle-on").addClass("toggle-off");
+        item.children("a").text("Auto-Save Off");
+        disableAutoSave();
+    }
+
+    return false;
+}
+
+/**
+ * [enableAutoSave description]
+ * @return {[type]} [description]
+ */
+function enableAutoSave() {
+    Registry.timeoutID = setTimeout(_saveAutoProgress, 10000);
+}
+
+/**
+ * [disableAutoSave description]
+ * @return {[type]} [description]
+ */
+function disableAutoSave() {
+    clearTimeout(Registry.timeoutID);
+}
+
+function _saveAutoProgress() {
+    var data = saveAutoProgress(true);
+    store("auto-save", data);
+    window.console.log("saved data to local storage!");
+    enableAutoSave();
 }
 
 /**
@@ -253,7 +303,6 @@ function init(assets) {
 
 
     }
-
     $(".imageBlocks>img").on("click", onSelectTile);
 }
 
@@ -397,7 +446,18 @@ function loadSample(e) {
     }
 }
 
-function saveProgress(e) {
+function loadLastSave(e) {
+    e.preventDefault();
+    var data = store("auto-save");
+    if (Registry.currentMap !== undefined) {
+        window.console.log("loading last save map...");
+        importJSON(data);
+    }
+
+    return false;
+}
+
+function saveProgress(e, returnData) {
     e.preventDefault();
 
     $(e.currentTarget).addClass("enabled");
@@ -444,7 +504,53 @@ function saveProgress(e) {
     $("#results").val(JSON.stringify(storage));
     //window.console.log(JSON.stringify(storage));
 
+    if(returnData === true) {
+        return JSON.stringify(storage);
+    }
 
+}
+
+function saveAutoProgress(returnData) {
+    var numChildren = $(".block").length;
+    var blocks = $("#map").children();
+    var extrasBlock = $("#mapOverlay").children();
+    var storage = {
+        "tiles": [],
+        "extras": []
+    };
+    var counter = 0;
+    for (var i = 0; i < numChildren; i++) {
+        if (counter === 0) {
+            storage.tiles.push([]);
+            storage.extras.push([]);
+        }
+
+        var type = "none";
+        if ($(blocks[i]).children().length > 0) {
+            type = $(blocks[i]).children(".tile").attr("rel");
+
+        } else {
+            type = "none";
+
+        }
+
+        if ($(extrasBlock[i]).children().length > 0) {
+            extrasType = $(extrasBlock[i]).children(".tile").attr("rel");
+        } else {
+
+            extrasType = "none";
+        }
+        //window.console.log(i, type, $(blocks[i]).children().length);
+        storage.tiles[storage.tiles.length - 1].push(type);
+        storage.extras[storage.extras.length - 1].push(extrasType);
+
+        counter += 1;
+        if (counter > 19) {
+            counter = 0;
+        }
+    }
+
+    return JSON.stringify(storage);
 }
 
 function importJSON(json) {

@@ -191,3 +191,23 @@
     min-height:135px;
     resize:none;
 }
+
+.toggle-on {
+    border-radius: 4px;
+    background-color: #999;
+    color: greenyellow;
+}
+
+.toggle-on a {
+    color: greenyellow;
+}
+
+.toggle-off {
+    border-radius: 4px;
+    background-color: lightgrey;
+    color: red;
+}
+
+.toggle-off a {
+    color: red;
+}
