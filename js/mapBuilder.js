@@ -135,6 +135,7 @@ $(document).ready(function () {
     $(".rebuildStage").bind("click", rebuildStage);
     $("#toggle-autosave").on("click", toggleAutoSave);
     $("#loadSave").on("click", loadLastSave);
+    $("#preview").on("click", addPreview);
 
     $(".modal").on("click", "#importJSON", function () {
         importJSON($("#import-input").val());
@@ -283,6 +284,21 @@ function enableDB(e) {
 }
 
 /**
+ * [addPreview description]
+ * @param {[type]} e [description]
+ */
+function addPreview(e) {
+    e.preventDefault();
+    var data = saveAutoProgress(true);
+    var newW = 64 * 20;
+    var newH = 64 * 12;
+
+    store("preview", {json:data, blocksize:64, width: newW, height: newH});
+
+    return false;
+}
+
+/**
  * [init description]
  * @return {[type]} [description]
  */
@@ -339,11 +355,14 @@ function appendAssets(assets) {
     $(".imageBlocks>img").on("click", onSelectTile);
 }
 
-function showTiles() {
+function showTiles(e) {
+    e.preventDefault();
+    window.console.log("loading extras");
     $("#mapOverlay").hide(300);
     $("#sidePanel2").hide(300, function () {
         $("#sidePanel").show(300);
     });
+    return false;
 }
 
 function showExtras() {
@@ -436,13 +455,11 @@ function clearTiles() {
 }
 
 function loadSample(e) {
-
     if (Registry.currentMap !== undefined) {
         window.console.log("loading sample map...", Registry.currentMap);
 
         //var map = JSON.parse(Registry.currentMap);
         importJSON(Registry.currentMap);
-
     }
 }
 
@@ -460,7 +477,7 @@ function loadLastSave(e) {
 function saveProgress(e, returnData) {
     e.preventDefault();
 
-    $(e.currentTarget).addClass("enabled");
+    //$(e.currentTarget).addClass("enabled");
 
     var numChildren = $(".block").length;
     var blocks = $("#map").children();
@@ -566,7 +583,7 @@ function importJSON(json) {
     }
 
     clearTiles();
-    window.console.log(tiles, extras);
+
     var blockSize = 64;
     var w = blockSize * 20;
     var h = blockSize * 12;
