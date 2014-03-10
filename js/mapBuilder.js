@@ -288,14 +288,14 @@ function enableDB(e) {
  * @param {[type]} e [description]
  */
 function addPreview(e) {
-    e.preventDefault();
+    //e.preventDefault();
     var data = saveAutoProgress(true);
     var newW = 64 * 20;
     var newH = 64 * 12;
 
     store("preview", {json:data, blocksize:64, width: newW, height: newH});
 
-    return false;
+    //return true;
 }
 
 /**
@@ -455,12 +455,15 @@ function clearTiles() {
 }
 
 function loadSample(e) {
+    e.preventDefault();
     if (Registry.currentMap !== undefined) {
         window.console.log("loading sample map...", Registry.currentMap);
 
         //var map = JSON.parse(Registry.currentMap);
         importJSON(Registry.currentMap);
     }
+
+    return false;
 }
 
 function loadLastSave(e) {

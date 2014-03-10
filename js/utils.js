@@ -13,7 +13,7 @@ function loadAssets(assets, fn) {
   }
 
   $.when.apply($, promises).done(function () {
-    Registry.cachedImages = {};
+
     for (var i = 0; i < arguments.length; i++) {
 
       Registry.cachedImages[$(arguments[i]).attr('src')] = arguments[i];

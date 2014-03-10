@@ -119,8 +119,10 @@ $(document).ready(function () {
     "assets/tiles/items/skull.png"
   ];
 
-    loadAssets(doodleList, function(){});
-    loadAssets(assetsList, createMap);
+    loadAssets(doodleList, function(){
+        loadAssets(assetsList, createMap);
+    });
+
 
     var stage = new Kinetic.Stage({
         container: 'map',
@@ -168,7 +170,7 @@ function createMap(data) {
                 y: i*data.blocksize
             });
 
-            window.console.log( i, k, row, eRow );
+
             var rowItems = row[k];
             var rowExtras = eRow[k];
 
@@ -189,8 +191,11 @@ function createMap(data) {
                 x:k*data.blocksize
             });
 
+            window.console.log(extra, rowExtras);
             rowGroup.add(tile);
             rowGroup.add(extraTile);
+
+            extraTile.moveToTop();
 
             Registry.layer.add(rowGroup);
         }
