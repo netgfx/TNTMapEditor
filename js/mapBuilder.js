@@ -155,7 +155,50 @@ $(document).ready(function () {
 
     $(".licence").on("click",showLicenceInfo);
 
+    $(".draw-options").on("change", onChangeDraw);
+
 });
+
+
+function onChangeDraw(e) {
+    $(".block").off("click");
+    $(".blockExtras").off("click");
+    disableMultiTile();
+    $(".block").off("mousedown");
+    $(".blockExtras").off("mousedown");
+
+    if( $(e.currentTarget).attr("id") === "clickBox") {
+        $(".block").on("click", addTile);
+        $(".blockExtras").on("click", addTile);
+    }
+    else if($(e.currentTarget).attr("id") === "multiBox") {
+
+        $(".block").off("mousedown").on("mousedown", enableMultiTile);
+        $(".blockExtras").off("mousedown").on("mousedown", enableMultiTile);
+        $(document).off("mouseup").on("mouseup", disableMultiTile);
+        //$(".blockExtras").off("mouseup").on("mouseup", enableMultiTile);
+    }
+    else if($(e.currentTarget).attr("id") === "eraseBox") {
+        $(".block").on("click", removeTile);
+        $(".blockExtras").on("click", removeTile);
+    }
+}
+
+function enableMultiTile(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    addTile(e);
+    $(".block").off("mouseenter").on("mouseenter", addTile);
+    $(".blockExtras").off("mouseenter").on("mouseenter", addTile);
+
+    return false;
+}
+
+function disableMultiTile(e) {
+    $(".block").off("mouseenter");
+    $(".blockExtras").on("mouseenter");
+}
 
 /**
  * [rebuildStage description]
@@ -444,6 +487,11 @@ function addTile(e) {
 
     $(e.currentTarget).empty().append(item);
 
+}
+
+function removeTile(e) {
+    var item = $(e.currentTarget);
+    item.empty();
 }
 
 function clearText(e) {

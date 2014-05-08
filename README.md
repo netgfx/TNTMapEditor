@@ -12,12 +12,13 @@ Feel free to use it as you like.
  * Load of a sample Map for quickstart
  * Load extra items along with tiles
  * Load custom tiles from Dropbox
- * Print tiles for export
+ * Save map to local-storage
+ * Auto save
+ * Paint tiles with mouse-move
 
 ### Future features support
- * Paint tiles with mouse-move
- * Clear existing tiles
- * Load previously loaded tiles
+ * Post in github for more features!
+ 
 
 <b>SAMPLE:</b> <a href="http://www.netgfx.com/trunk/games/tntmap/index.html">TNT Map Builder</a>
 

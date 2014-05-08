@@ -46,11 +46,32 @@
                 <li class="navbar-btn" id="showTiles"><a href="#">Show Tiles</a></li>
                 <li class="navbar-btn" id="showExtras"><a href="#">Show Extras</a></li>
                 <li class="navbar-btn" id="loadAssets"><a href="#">Load Assets</a></li>
-                <li class="navbar-btn" data-toggle="modal" data-target="#myModal" id="save"><a href="#">Export JSON</a></li>
-                <li class="navbar-btn" data-toggle="modal" data-target="#importModal" id="import"><a href="#">Import JSON</a></li>
-                <li class="navbar-btn" id="loadSample"><a href="#">Load Sample</a></li>
-                <li class="navbar-btn toggle-off" id="toggle-autosave" data-toggle="button"><a href="#">Auto-Save Off</a></li>
-                <li class="navbar-btn" id="loadSave"><a href="#">Load Last Save</a></li>
+
+                <li class="dropdown navbar-btn">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li id="loadSave"><a href="#" >Load Last Save</a></li>
+                    <li id="preview"><a href="preview.html" target="_blank" >Print/Preview</a></li>
+                    <li id="loadSample"><a href="#" >Load Sample</a></li>
+                    <li class="divider"></li>
+                    <li data-toggle="modal" data-target="#importModal" id="import"><a href="#">Import JSON</a></li>
+                    <li data-toggle="modal" data-target="#myModal" id="save"><a href="#">Export JSON</a></li>
+                  </ul>
+
+                </li>
+                <li class="navbar-btn toggle-off" id="toggle-autosave" data-toggle="button"><a href="#">Auto-Save Off</a>
+                </li>
+                <li class="navbar-btn" >
+                  <label class="checkbox-inline">
+                    <input type="radio" name="draw" id="clickBox" class="draw-options" value="perclick" checked> Box by Box draw
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="radio" name="draw" id="multiBox" class="draw-options" value="multibox"> Multi-Box draw
+                  </label>
+                  <label class="checkbox-inline">
+                    <input type="radio" name="draw" id="eraseBox" class="draw-options" value="eraseBox"> Erase
+                  </label>
+                </li>
               </ul>
 
               <ul class="nav navbar-nav navbar-right">
