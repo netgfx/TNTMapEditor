@@ -197,7 +197,7 @@ function enableMultiTile(e) {
 
 function disableMultiTile(e) {
     $(".block").off("mouseenter");
-    $(".blockExtras").on("mouseenter");
+    $(".blockExtras").off("mouseenter");
 }
 
 /**
