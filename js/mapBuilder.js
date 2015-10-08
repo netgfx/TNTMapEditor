@@ -1,5 +1,8 @@
 var selectedTile = "";
 var client;
+var options = {
+    blockSize: 64
+};
 $(document).ready(function () {
 
 
@@ -141,6 +144,8 @@ $(document).ready(function () {
         importJSON($("#import-input").val());
     });
 
+    $("#csv").on("change", exportCSV);
+
     $('#myModal').on('shown.bs.modal', function (e) {
         $('#saveExport').zclip({
             path: 'ZeroClipboard.swf',
@@ -153,7 +158,7 @@ $(document).ready(function () {
         });
     });
 
-    $(".licence").on("click",showLicenceInfo);
+    $(".licence").on("click", showLicenceInfo);
 
     $(".draw-options").on("change", onChangeDraw);
 
@@ -167,18 +172,16 @@ function onChangeDraw(e) {
     $(".block").off("mousedown");
     $(".blockExtras").off("mousedown");
 
-    if( $(e.currentTarget).attr("id") === "clickBox") {
+    if ($(e.currentTarget).attr("id") === "clickBox") {
         $(".block").on("click", addTile);
         $(".blockExtras").on("click", addTile);
-    }
-    else if($(e.currentTarget).attr("id") === "multiBox") {
+    } else if ($(e.currentTarget).attr("id") === "multiBox") {
 
         $(".block").off("mousedown").on("mousedown", enableMultiTile);
         $(".blockExtras").off("mousedown").on("mousedown", enableMultiTile);
         $(document).off("mouseup").on("mouseup", disableMultiTile);
         //$(".blockExtras").off("mouseup").on("mouseup", enableMultiTile);
-    }
-    else if($(e.currentTarget).attr("id") === "eraseBox") {
+    } else if ($(e.currentTarget).attr("id") === "eraseBox") {
         $(".block").on("click", removeTile);
         $(".blockExtras").on("click", removeTile);
     }
@@ -210,11 +213,12 @@ function rebuildStage(e) {
     e.preventDefault();
     var newW = $("#width").val();
     var newH = $("#height").val();
+    var tileSize = $("#tileSize").val();
 
-    var totalBlocksW = Math.ceil(newW / 64);
-    var totalBlocksH = Math.ceil(newH / 64);
+    var totalBlocksW = Math.ceil(newW / tileSize);
+    var totalBlocksH = Math.ceil(newH / tileSize);
 
-    createBlocks(64, totalBlocksW, totalBlocksH);
+    createBlocks(tileSize, totalBlocksW, totalBlocksH);
     return false;
 }
 
@@ -239,13 +243,12 @@ function toggleAutoSave(e) {
     window.console.log(e);
 
     var item = $(e.currentTarget);
-    if(item.hasClass("toggle-off")){
+    if (item.hasClass("toggle-off")) {
         item.removeClass("toggle-off").addClass("toggle-on");
         item.children("a").text("Auto-Save On");
         enableAutoSave();
         window.console.log("init save");
-    }
-    else if(item.hasClass("toggle-on")){
+    } else if (item.hasClass("toggle-on")) {
         item.removeClass("toggle-on").addClass("toggle-off");
         item.children("a").text("Auto-Save Off");
         disableAutoSave();
@@ -291,7 +294,7 @@ function enableDB(e) {
             alert("Here's the file link: " + files[0].link);
 
             var arr = [];
-            for(var i=0; i<files.length;i++){
+            for (var i = 0; i < files.length; i++) {
                 var img = files[i].link;
                 arr.push(img);
             }
@@ -333,10 +336,15 @@ function enableDB(e) {
 function addPreview(e) {
     //e.preventDefault();
     var data = saveAutoProgress(true);
-    var newW = 64 * 20;
-    var newH = 64 * 12;
+    var newW = options.blockSize * 20;
+    var newH = options.blockSize * 12;
 
-    store("preview", {json:data, blocksize:64, width: newW, height: newH});
+    store("preview", {
+        json: data,
+        blocksize: options.blockSize,
+        width: newW,
+        height: newH
+    });
 
     //return true;
 }
@@ -351,7 +359,7 @@ function init(assets) {
 
     for (var i = 0; i < assets.length; i++) {
         var uid = _.uniqueId("tile_");
-        $("#sidePanel").append("<div class='imageBlocks'><img id='" + uid + "' src='" + assets[i] + "'/></div>");
+        $("#sidePanel").append("<div class='imageBlocks'><img id='" + uid + "' src='" + assets[i] + "' data-index='" + i + "'/></div>");
         $(".imageBlocks>img").draggable({
             cursor: "move",
             revert: true,
@@ -368,7 +376,7 @@ function init(assets) {
 function makeDoodles(assets) {
     for (var i = 0; i < assets.length; i++) {
         var uid = _.uniqueId("item_");
-        $("#sidePanel2").append("<div class='imageBlocks'><img class='extras' id='" + uid + "' src='" + assets[i] + "'/></div>");
+        $("#sidePanel2").append("<div class='imageBlocks'><img class='extras' data-index='" + i + "' id='" + uid + "' src='" + assets[i] + "'/></div>");
         $(".imageBlocks>img").draggable({
             cursor: "move",
             revert: true,
@@ -430,18 +438,24 @@ function createBlocks(blockSize, offset1, offset2) {
     var w = blockSize * totalW;
     var h = blockSize * totalH;
 
-    window.console.log("Building Map: ", totalW, totalH, offset1, offset2, w, h);
-
+    window.console.log("Building Map: ", totalW, totalH, offset1, offset2, w, h, blockSize);
+    blockSize = parseInt(blockSize, 10);
     $("#map").empty();
     for (var i = 0; i < totalH; i++) {
         for (var j = 0; j < totalW; j++) {
 
-            $("#map").append("<div class='block' id='block_" + i + "_" + j + "' style='left:" + (j * (blockSize + 1)) + "px;top:" + (i * (blockSize + 1)) + "px;'></div>");
+            $("#map").append("<div class='block' id='block_" + i + "_" + j + "' data-index='" + i + "' style='left:" + (j * (blockSize + 1)) + "px;top:" + (i * (blockSize + 1)) + "px;'></div>");
 
-            $("#mapOverlay").append("<div class='blockExtras' id='extras_" + i + "_" + j + "' style='left:" + (j * (blockSize + 1)) + "px;top:" + (i * (blockSize + 1)) + "px;'></div>");
+            $("#mapOverlay").append("<div class='blockExtras' id='extras_" + i + "_" + j + "' data-index='" + i + "' style='left:" + (j * (blockSize + 1)) + "px;top:" + (i * (blockSize + 1)) + "px;'></div>");
         }
     }
-
+    $(".block").css({
+        width: blockSize,
+        height: blockSize
+    });
+    options.blockSize = blockSize;
+    options.totalW = totalW;
+    options.totalH = totalH;
     $(".block").on("click", addTile);
     $(".blockExtras").on("click", addTile);
     // hi-jack right click to clear
@@ -466,10 +480,11 @@ function createBlocks(blockSize, offset1, offset2) {
             imgType = imgType[imgType.length - 1];
             imgType = String(imgType).replace(".png", "");
             var UID = _.uniqueId("map_");
+            var dataIndex = $(ui.helper[0]).data("index");
             var clone = $(ui.helper[0]).clone().css({
                 'left': 0,
                 'top': 0
-            }).attr("id", UID).attr("rel", imgType).addClass("tile");
+            }).attr("id", UID).attr("rel", imgType).attr("data-index", dataIndex).addClass("tile");
 
             $(this).empty().append(clone);
         }
@@ -483,7 +498,8 @@ function addTile(e) {
     imgType = imgType[imgType.length - 1];
     imgType = String(imgType).replace(".png", "");
     var UID = _.uniqueId("map_");
-    $(item).attr("id", UID).attr("rel", imgType).addClass("tile");
+    var dataIndex = $(selectedTile).data("index");
+    $(item).attr("id", UID).attr("rel", imgType).attr("data-index", dataIndex).addClass("tile");
 
     $(e.currentTarget).empty().append(item);
 
@@ -572,10 +588,51 @@ function saveProgress(e, returnData) {
     $("#results").val(JSON.stringify(storage));
     //window.console.log(JSON.stringify(storage));
 
-    if(returnData === true) {
+    if (returnData === true) {
         return JSON.stringify(storage);
     }
+}
 
+function exportCSV(e) {
+
+    if ($(e.currentTarget).is(":checked")) {
+
+        var numChildren = $(".block").length;
+        var columns = numChildren / options.totalW;
+        var rows = numChildren / options.totalH;
+        var blocks = $("#map").children();
+        var extrasBlock = $("#mapOverlay").children();
+        var FINAL_CSV = "";
+        var counter = 0;
+        for (var i = 0; i < columns; i++) {
+            var type = "none";
+            for (var j = 0; j < rows; j++) {
+                if ($(blocks[counter]).children().length > 0) {
+                    if (j + 1 < rows) {
+                        FINAL_CSV = FINAL_CSV + $(blocks[counter]).children(".tile").data("index") + ",";
+                    } else {
+                        FINAL_CSV = FINAL_CSV + $(blocks[counter]).children(".tile").data("index");
+                    }
+                } else {
+                    window.console.log(j, rows);
+                    if (j + 1 < rows) {
+                        FINAL_CSV = FINAL_CSV + "-1,";
+                    } else {
+                        FINAL_CSV = FINAL_CSV + "-1";
+                    }
+                }
+                counter += 1;
+            }
+
+            FINAL_CSV = FINAL_CSV + '\r\n';
+        }
+
+        $("#results").val(FINAL_CSV);
+
+        return JSON.stringify(FINAL_CSV);
+    } else {
+        return false;
+    }
 }
 
 function saveAutoProgress(returnData) {

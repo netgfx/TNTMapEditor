@@ -76,6 +76,7 @@
 
               <ul class="nav navbar-nav navbar-right">
                 <form class="navbar-form navbar-left" role="search">
+                    <input type="number" class="form-control" placeholder="tile-size in pixels e.g:64" id="tileSize">
                     <input type="text" class="form-control" placeholder="Width" id="width">
                     <input type="text" class="form-control" placeholder="Height" id="height">
                     <button type="submit" class="btn btn-default rebuildStage">Build</button>
@@ -115,6 +116,12 @@
                 <textarea id="results"></textarea>
               </div>
               <div class="modal-footer">
+                <div class="checkbox pull-left" >
+                  <label for="csv">
+                    <input type="checkbox" value="" id="csv">
+                    Export in CSV format
+                  </label>
+                </div>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="saveExport">Save To Clipboard</button>
               </div>
